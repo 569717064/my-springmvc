@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 配置映射器处理器： 
+		1.接收前端控制器传递的请求地址：/user.do
+		2.根据请求地址去匹配控制器的id属性，找到控制器UserController并返回给前端控制器
+	-->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+	<!-- 配置适配器处理器：
+		1.接收前端控制器传递的UserController并执行
+		2.返回ModelAndView() “index”给前端控制器
+	-->
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
+	<!-- 配置控制器 
+		注意， 控制器的id必须以"/"开头， 否则....
+	-->
+	<bean id="/user.do" class="com.woniu.a_hello.UserController"></bean>
+	<!-- 配置视图解析器： 
+		1.接收前端控制器传递的逻辑视图“index”，并且在逻辑视图前后加上前后缀，得到一个物理视图
+		2.返回物理视图给前端控制器
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>

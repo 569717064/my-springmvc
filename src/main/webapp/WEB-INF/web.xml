@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>springmvc</display-name>
+  <!-- 
+		1. 在tomcat启动的时候，就会立即实力化DispatcherServlet
+		2.在实例化DispatcherServlet的时候，DispatcherServlet就会创建spring ioc容器
+		3.创建spring ioc容器的时候，势必把spring的配置文件指定出来。这里恰恰是通过servlet的初始化参数指定：
+		4.在DispatcherServlet加载/spring-servlet.xml文件的时候，就会引起包的扫描包
+		5.扫苗包的过程中，就会把那些有@Controller、@Repository、@Service、@Component注解的类，
+		实例化出来，把实例放入spring ioc容器中。
+	 -->
+	 <!-- 前端控制器负责拦截所有do结尾的请求，然后对这些请求进行分发 -->
+	<servlet>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:com/woniu/n_rest/spring-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

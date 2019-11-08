@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 扫包 -->
+	<context:component-scan base-package="com.woniu.g_httpmessageconverter"></context:component-scan>
+	
+	<!-- 等价于同时配置了 注解映射器 和 注解适配器 
+		conversion-service:注册转换器
+	-->
+	<mvc:annotation-driven>
+		<!-- 
+			下面的register-defaults属性，用于控制SpringMVC框架是否注册默认的消息转换器，其中就包括StringHttpMessageConverter 
+			register-defaults默认为true。-->
+		<mvc:message-converters register-defaults="true">
+			<bean class="com.woniu.g_httpmessageconverter.UserHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/woniu</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg value="yyyy-MM-dd"/>
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>	
+	
+	<!-- 视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>   

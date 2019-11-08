@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.9.10.201909171046-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>src/main/java/com/woniu/a_hello/spring-servlet.xml</config>
+	</configs>
+	<autoconfigs>
+		<config>src/main/java/com/woniu/g_httpmessageconverter/spring-servlet.xml</config>
+		<config>src/main/java/com/woniu/k_interceptor/spring-servlet.xml</config>
+		<config>src/main/java/com/woniu/j_upload/spring-servlet.xml</config>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>
